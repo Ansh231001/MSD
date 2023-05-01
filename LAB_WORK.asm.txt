@@ -1,0 +1,416 @@
+#make_bin#
+
+; BIN is plain binary format similar to .com format, but not limited to 1 segment;
+; All values between # are directives, these values are saved into a separate .binf file.
+; Before loading .bin file emulator reads .binf file with the same file name.
+
+; All directives are optional, if you don't need them, delete them.
+
+; set loading address, .bin file will be loaded to this address:
+#LOAD_SEGMENT=0500h#
+#LOAD_OFFSET=0000h#
+
+; set entry point:
+#CS=0500h#	; same as loading segment
+#IP=0000h#	; same as loading offset
+
+; set segment registers
+#DS=0700h#	; same as loading segment
+#ES=0500h#	; same as loading segment
+
+; set stack
+#SS=0500h#	; same as loading segment
+#SP=FFFEh#	; set to top of loading segment
+
+; set general registers (optional)
+#AX=0000h#
+#BX=0000h#
+#CX=0000h#
+#DX=0000h#
+#SI=0500h#
+#DI=0000h#
+#BP=0000h#
+ 
+ 
+;QUESTION 1
+
+
+
+ 
+; add 2 16BIT NUMBERS 
+
+;MOV CX,0000H
+;MOV AX,DS:[0500H]
+;MOV BX,DS:[0502H]
+;ADD AX,BX
+;JNC HELLO
+;INC CX
+;HELLO: MOV DS:[0504H],AX
+;MOV DS:[0506H],CX
+;HLT  
+
+ 
+
+
+
+
+
+
+ 
+ 
+;QUESTION 2
+
+
+
+
+
+
+;SUBTRACT 2 16-BIT NUMBERS 
+
+;MOV CX,0000H
+;MOV AX,DS:[0500H]
+;MOV BX,DS:[0502H]
+;SUB AX,BX
+;JNC HELLO
+;INC CX
+;HELLO: MOV DS:[0504H],AX
+;MOV DS:[0506H],CX
+;HLT 
+
+ 
+ 
+           
+           
+           
+           
+           
+           
+           
+           
+           
+
+
+           
+;QUESTION 3
+
+
+ 
+;MULTIPLY 2 16-BIT NUMBERS
+
+;MOV AX,DS:[0500H]
+;MOV BX,DS:[0502H]
+;MUL BX
+;JNC HELLO
+;HELLO: MOV DS:[0504H],AX
+;MOV DS:[0506H],DX
+;HLT
+     
+     
+ 
+
+
+
+
+
+
+
+ 
+;QUESTION 4
+
+
+     
+;DIVIDE 2 16-BIT NUMBERS
+
+;MOV AX,DS:[0500H]
+;MOV BX,DS:[0502H]
+;DIV BX
+;JNC HELLO
+;HELLO: MOV DS:[0504H],AX
+;MOV DS:[0506H],DX
+;HLT
+  
+  
+   
+   
+   
+   
+   
+   
+  
+
+;5a
+;MOV AL,7
+;ADD AL,9
+;AAA
+;HLT
+
+
+;5b
+;MOV AX,020FH
+;AAS
+;HLT
+
+;5c
+;MOV AL,5
+;MOV BL,7
+;MUL BL
+;AAM
+;HLT
+
+;5D
+;MOV AX,0205H
+;AAD
+;HLT 
+
+;5E
+;MOV AL,7
+;ADD AL,6
+;DAA
+;HLT
+;  
+
+
+;5F
+;MOV AL,71H
+;SUB AL,43H
+;DAS
+;HLT
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+;QUESTION 6 
+ 
+ 
+ 
+;count of +ve and -ve numbers
+;DL STORES THE NEGATIVE NUMBERS
+;BL STORES THE POSITIVE NUMBERS
+;MOV CL,0AH
+;MOV BL,00H
+;MOV DL,00H
+;L1:MOV AL,[SI]
+;SHL AL,01
+;JNC L2
+;INC DL
+;JMP L3
+;L2:INC BL
+;L3:INC SI
+;DEC CL
+;JNZ L1
+;MOV DS:[050AH],BL
+;MOV DS:[050BH],DL
+;HLT
+;
+
+   
+   
+   
+   
+   
+   
+;QUESTION 7   
+   
+   
+   
+; calculates the largest number from the series of positive numbers
+;8bit
+;MOV CL,0AH
+;MOV AL,[SI]
+;L1:INC SI
+;MOV BL,[SI]
+;CMP AL,BL
+;JC L2
+;JMP L3
+;L2: MOV AL,BL
+;L3:DEC CL
+;JNZ L1
+;MOV DS:[050AH],AL
+;HLT 
+
+
+
+
+
+
+            
+            
+            
+            
+;QUESTION 7a 
+
+
+
+; MAX OF THE NUMBERS(MIX NUMBERS) 
+;MOV CL,DS:[SI]
+;MOV DX,0000H
+;MOV CH,00H
+;SKIP:MOV AL,DS:[SI+1]
+;MOV DL,AL
+;AND DL,80H
+;JZ POSITIVE
+;INC SI
+;JZ SKIP
+;POSITIVE:MOV BL,[SI+1]
+;MOV DL,BL
+;AND DL,80H
+;JZ POSITIVE1
+;JZ MAX
+;POSITIVE1:CMP AL,BL
+;JNS MAX
+;MOV AL,BL
+;MAX:INC SI
+;LOOP POSITIVE
+;HLT 
+
+       
+           
+           
+           
+           
+           
+           
+           
+;QUESTION 8
+
+
+
+
+; calculates the largest number from the series of positive numbers
+;16bit
+;MOV BX, 2000H
+;MOV CL, [BX]
+;INC BX
+;MOV AX, [BX]
+;DEC CL
+;Back: INC BX
+;INC BX
+;CMP AX, [BX]
+;JNC Next
+;MOV AX, [BX]
+;Next: DEC CL
+;JNZ Back
+;MOV [2020H], AX
+;HLT ; halt!T  
+
+                 
+                 
+
+
+
+
+
+                 
+;QUESTION 9
+
+
+                 
+                 
+;fIBONACCI SERIES
+;MOV CX,10
+;MOV DS:[SI],00H
+;INC SI
+;MOV DS:[SI],01H
+;INC SI
+;MOV AL,00H
+;MOV AH,01H
+;AGAIN:ADD AL,AH
+;MOV [SI],AL
+;MOV DL,AL
+;INC SI
+;MOV AL,AH
+;MOV AH,DL
+;LOOP AGAIN
+;HLT 
+
+
+
+
+;QUESTION 10
+;MOV AX,'15'
+;MOV BL,'6'
+;SUB AX,3030H
+;SUB BL,30H
+;AAD 
+;DIV BL
+;HLT
+
+
+;MOV AL,'6'
+;ADD AL,'7'
+;AAA
+;OR AL,30H
+;
+    
+;MOV AL,64
+;MOV AH,00H
+;MOV BL,5H
+;SUB AL,3634H
+;SUB BL,35H
+;AAD
+;DIV BL
+;MOV DS:[SI],AL
+;HLT
+
+
+
+
+
+;50/5+2*3-10
+;MOV AX,'50'
+;MOV BX,'5'
+;SUB AX,3030H
+;SUB BX,30H
+;AAD
+;DIV BL
+;OR AL,30H
+;MOV DL,AL
+;MOV AL,'2'
+;MOV BL,'3'
+;SUB AL,30H
+;SUB BL,30H
+;MUL BL
+;AAM 
+;OR AL,30H
+;ADD AL,DL
+;AAA
+;OR AX,3030H
+;MOV CX,'10'
+;SUB AX,CX
+;AAS 
+;Or AX,3030H
+;HLT;
+
+
+
+;MOV AX,'50'
+;MOV BX,'5'
+;SUB AX,3030H
+;SUB BX,30H
+;AAD
+;DIV BL
+;OR AL,30H
+;MOV DL,AL
+;MOV AL,'2'
+;MOV BL,'3'
+;SUB AL,30H
+;SUB BL,30H
+;AAM
+;MUL BL
+;OR AL,30H
+;ADD AL,DL
+;AAA
+;OR AX,3030H
+;MOV CX,'10'
+;SUB AX,CX
+;AAS
+;OR AX,3030H
+;HLT

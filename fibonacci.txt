@@ -1,0 +1,113 @@
+fibonacci
+
+DATA SEGMENT
+    ARR DW 10 DUP(?)
+    N DW 10
+ENDS
+
+CODE SEGMENT
+    START:
+        MOV AX,DATA
+        MOV DS,AX
+        
+        MOV CX,N
+        MOV BX,0
+        MOV [ARR+BX],0
+        INC BX
+        MOV [ARR+BX],1
+        
+    LOOP_START:
+        DEC CX
+        JZ END_LOOP
+        
+        MOV AX,[ARR+BX-2]
+        ADD AX,[ARR+BX]
+        INC BX
+        MOV [ARR+BX],AX
+        
+        JMP LOOP_START
+        
+    END_LOOP:
+        MOV AH,4CH
+        INT 21H
+
+CODE ENDS
+END START
+
+
+DATA SEGMENT
+    ARR DB 7,8,-3,6,-2,-1
+    COUNT_POS DB 00
+    COUNT_NEG DB 00
+ENDS
+
+
+
+//positive neg
+
+
+CODE SEGMENT
+    START:
+        MOV AX,DATA
+        MOV DS,AX
+        
+        MOV SI,0
+        MOV CX,6
+    
+    LOOP_START:
+        MOV AL,[ARR+SI]
+        CMP AL, 0
+        JL NEG_NUM
+        INC COUNT_POS
+        JMP NEXT_NUM
+       
+    NEG_NUM:
+        INC COUNT_NEG
+        
+    NEXT_NUM:
+        INC SI
+        LOOP LOOP_START
+        
+        MOV AH,4CH
+        INT 21H
+
+CODE ENDS
+END START
+
+
+//max min
+
+DATA SEGMENT
+    ARR DB 7,8,-3,6,-2,-1
+    MAX DB ?
+ENDS
+
+CODE SEGMENT
+    START:
+        MOV AX,DATA
+        MOV DS,AX
+        
+        MOV SI,0
+        MOV CX,6
+        MOV AL,[ARR]
+        MOV MAX,AL
+    
+    LOOP_START:
+        INC SI
+        MOV AL,[ARR+SI]
+        CMP AL,MAX
+        JLE NEXT_NUM
+        MOV MAX,AL
+        
+    NEXT_NUM:
+        LOOP LOOP_START
+        
+        MOV AH,4CH
+        INT 21H
+
+CODE ENDS
+END START
+
+
+
+
